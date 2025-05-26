@@ -1,10 +1,7 @@
 extends NodeState
 
-@export var player: CharacterBody2D
+@export var player: Player
 @export var animated_sprite_2d: AnimatedSprite2D
-
-var direction: Vector2
-var animation_direction: String
 
 var speed:float = 100
 
@@ -13,16 +10,16 @@ func _on_process(_delta : float) -> void:
 
 
 func _on_physics_process(_delta : float) -> void:
-	direction = GameInputEvent.movement_input()
-	animation_direction = GameInputEvent.get_animation_direction(direction)
-	animated_sprite_2d.play("walk_%s" % animation_direction)
+	player.direction = GameInputEvent.movement_input()
+	player.anim_direction = player.get_animation_direction(player.direction)
+	animated_sprite_2d.play("walk_%s" % player.anim_direction)
 	
-	player.velocity = direction * speed
+	player.velocity = player.direction * speed
 	player.move_and_slide()
 	
 
 func _on_next_transitions() -> void:
-	var moving = GameInputEvent.is_movement_input(direction)
+	var moving = GameInputEvent.is_movement_input(player.direction)
 	if !moving:
 		transition.emit("Idle")
 
