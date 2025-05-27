@@ -1,6 +1,7 @@
+class_name Player
 extends CharacterBody2D
 
-class_name Player
+@export var current_tool: DataTypes.Tools = DataTypes.Tools.WaterCrops
 
 var direction: Vector2 = Vector2.DOWN
 var anim_direction = "down"

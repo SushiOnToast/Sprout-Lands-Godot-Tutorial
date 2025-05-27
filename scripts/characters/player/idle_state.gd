@@ -19,6 +19,14 @@ func _on_next_transitions() -> void:
 	var moving = GameInputEvent.is_movement_input(player.direction)
 	if moving:
 		transition.emit("Walk")
+		
+	if GameInputEvent.use_tool():
+		if player.current_tool == DataTypes.Tools.AxeWood:
+			transition.emit("Chopping")
+		elif player.current_tool == DataTypes.Tools.TillGround:
+			transition.emit("Tilling")
+		elif player.current_tool == DataTypes.Tools.WaterCrops:
+			transition.emit("Watering")
 
 
 func _on_enter() -> void:
@@ -26,4 +34,4 @@ func _on_enter() -> void:
 
 
 func _on_exit() -> void:
-	pass
+	animated_sprite_2d.stop()
